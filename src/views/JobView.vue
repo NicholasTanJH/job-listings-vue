@@ -6,6 +6,8 @@ import { RouterLink, useRoute, useRouter } from 'vue-router';
 import BackButton from '@/components/BackButton.vue';
 import JobsView from './JobsView.vue';
 import { useToast } from 'vue-toastification';
+import { doc, getDoc, deleteDoc } from "firebase/firestore";
+import { db } from '@/firebase';
 
 const route = useRoute();
 const router = useRouter();
@@ -19,13 +21,17 @@ const state = reactive({
 });
 
 onMounted(async () => {
-    try {
-        const response = await axios.get(`/api/jobs/${jobId}`);
-        state.job = response.data;
-    } catch (error) {
-        console.log('Error in fetching job data', error);
-    } finally {
+    const docRef = doc(db, "jobs", jobId);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        state.job = docSnap.data();
         state.isLoading = false;
+    } else {
+        // docSnap.data() will be undefined in this case
+        console.log("No such document!");
+        router.push(`/notFound`);
     }
 })
 
@@ -33,7 +39,7 @@ const deleteJob = async () => {
     try {
         const confirmDelete = window.confirm('Are you sure you want to delete?');
         if (confirmDelete) {
-            await axios.delete(`/api/jobs/${jobId}`);
+            await deleteDoc(doc(db, "jobs", jobId));
             toast.success('Delete Job Successfully');
             router.push('/jobs');
         }

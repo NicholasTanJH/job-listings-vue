@@ -1,8 +1,11 @@
 <script setup>
 import axios from 'axios';
 import { reactive } from 'vue';
-import router  from '@/router';
+import router from '@/router';
 import { useToast } from 'vue-toastification';
+//firebase
+import { db } from '@/firebase';
+import { getDocs, query, collection, setDoc, doc } from "firebase/firestore";
 
 const form = reactive({
     type: 'Full-Time',
@@ -36,14 +39,27 @@ const handleSumbit = async () => {
     }
 
     try {
-        const response = await axios.post('/api/jobs', newJob);
-        router.push(`/jobs/${response.data.id}`);
+        const docRef = await addDoc(collection(db, "jobs"), newJob);
         toast.success('Job Added Successfully');
-    } catch (error) {
-        console.log('Error in POST job data', error);
+        console.log("Document written with ID: ", docRef.id);
+        router.push(`/jobs/${response.data.id}`);
+    } catch (e) {
         toast.error('Error Adding Job');
+        console.error("Error adding document: ", e);
     }
 };
+
+import jobsData from '@/jobs.json';
+
+async function uploadJobs() {
+    for (const job of jobsData.jobs) {
+        const jobId = job.id.toString();
+        await setDoc(doc(db, "jobs", jobId), job);
+    }
+    console.log('Upload complete!');
+}
+
+uploadJobs();
 </script>
 
 <template>

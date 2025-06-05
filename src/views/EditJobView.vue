@@ -5,6 +5,9 @@ import { reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 
+import { db } from '@/firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
 const route = useRoute();
 const toast = useToast();
 
@@ -45,28 +48,35 @@ async function handleUpdate() {
     }
 
     try {
-        const response = await axios.put(`/api/jobs/${jobId}`, updatedJob);
-        router.push(`/jobs/${jobId}`);
+        const docRef = doc(db, "jobs", jobId);
+        await updateDoc(docRef, updatedJob);
         toast.success('Job Updated Successfully');
+        router.push(`/jobs/${jobId}`);
     } catch (error) {
         toast.error('Error Updating Job');
-        console.log('Error in PUT job data', error);
     }
 };
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`/api/jobs/${jobId}`);
-        state.job = response.data;
-        form.type = state.job.type;
-        form.title = state.job.title;
-        form.description = state.job.description;
-        form.salary = state.job.salary;
-        form.location = state.job.location;
-        form.company.name = state.job.company.name;
-        form.company.description = state.job.company.description;
-        form.company.contactEmail = state.job.company.contactEmail;
-        form.company.contactPhone = state.job.company.contactPhone;
+
+        const docRef = doc(db, "jobs", jobId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            state.job = docSnap.data();
+            form.type = state.job.type;
+            form.title = state.job.title;
+            form.description = state.job.description;
+            form.salary = state.job.salary;
+            form.location = state.job.location;
+            form.company.name = state.job.company.name;
+            form.company.description = state.job.company.description;
+            form.company.contactEmail = state.job.company.contactEmail;
+            form.company.contactPhone = state.job.company.contactPhone;
+        } else {
+            throw('No such job found');
+        }
     } catch (error) {
         console.log('Error Fetching Job Data', error);
     } finally {

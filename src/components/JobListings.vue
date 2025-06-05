@@ -4,6 +4,8 @@ import JobListing from './JobListing.vue';
 import { ref, defineProps, onMounted, reactive } from 'vue';
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import axios from 'axios';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '@/firebase';
 
 const state = reactive({
     jobs: [],
@@ -19,14 +21,13 @@ defineProps({
 })
 
 onMounted(async () => {
-    try {
-        const response = await axios.get('/api/jobs');
-        state.jobs = response.data;
-    } catch (error) {
-        console.log('Error in fetching job data', error);
-    } finally {
-        state.isLoading = false;
-    }
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    state.jobs = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }));
+
+    state.isLoading = false;
 })
 </script>
 
