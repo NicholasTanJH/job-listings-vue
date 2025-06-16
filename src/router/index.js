@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from '@/views/HomeView.vue';
-import JobListings from "@/views/JobsView.vue";
+import JobListings from "@/views/ListingsView.vue";
 import NotFound from "@/views/NotFound.vue";
-import JobView from "@/views/JobView.vue";
+import JobView from "@/views/ListingView.vue";
 import AddJobView from "@/views/AddJobView.vue";
-import EditJobView from "@/views/EditJobView.vue";
+import EditJobView from "@/views/EditListingView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,13 +15,13 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: '/jobs',
-            name: 'jobs',
+            path: '/listings',
+            name: 'listings',
             component: JobListings
         },
         {
-            path: '/jobs/:id',
-            name: 'job',
+            path: '/listings/:id',
+            name: 'listing',
             component: JobView 
         },
         {
@@ -30,12 +30,12 @@ const router = createRouter({
             component: NotFound
         },
         {
-            path: '/jobs/add',
-            name: 'add-job',
+            path: '/listings/add',
+            name: 'add-listing',
             component: AddJobView
         },
         {
-            path: '/jobs/edit/:id',
+            path: '/listings/edit/:id',
             name: 'editPage',
             component: EditJobView
         }

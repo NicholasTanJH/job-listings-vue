@@ -16,7 +16,7 @@ const isActive = (routePath) => {
           <!-- Logo -->
           <RouterLink class="flex shrink-0 items-center mr-4" to="/">
             <img class="h-10 w-auto" :src="logo" alt="Vue Jobs" />
-            <span class="hidden md:block text-white text-2xl font-bold ml-2">Vue Jobs</span>
+            <span class="hidden md:block text-white text-2xl font-bold ml-2">Pets Finder</span>
           </RouterLink>
           <div class="md:ml-auto">
             <div class="flex space-x-2">
@@ -24,14 +24,14 @@ const isActive = (routePath) => {
                 :class="[isActive('/') ? 'bg-green-900' : 'hover:bg-gray-900', 'text-white', 'rounded-md', 'px-3', 'py-2']">
                 Home
               </RouterLink>
-              <RouterLink to="/jobs"
+              <RouterLink to="/listings"
                 :class="[isActive('/jobs') ? 'bg-green-900' : 'hover:bg-gray-900', 'text-white', 'rounded-md', 'px-3', 'py-2']">
-                Jobs
+                Listings
               </RouterLink>
-              <RouterLink to="/jobs/add"
+              <RouterLink to="/listings/add"
                 :class="[isActive('/jobs/add') ? 'bg-green-900' : 'hover:bg-gray-900', 'text-white', 'rounded-md', 'px-3', 'py-2']">
                 Add
-                Job</RouterLink>
+                New Listing</RouterLink>
             </div>
           </div>
         </div>

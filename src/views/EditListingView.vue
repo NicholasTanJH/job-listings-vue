@@ -1,11 +1,17 @@
 <script setup>
 import axios from 'axios';
-import { reactive } from 'vue';
 import router from '@/router';
+import { reactive, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
-//firebase
+
 import { db } from '@/firebase';
-import { getDocs, query, collection, setDoc, doc, addDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
+const route = useRoute();
+const toast = useToast();
+
+const jobId = route.params.id;
 
 const form = reactive({
     type: 'In-Person',
@@ -21,10 +27,13 @@ const form = reactive({
     },
 })
 
-const toast = useToast();
+const state = reactive({
+    job: {},
+    isLoading: true,
+});
 
-const handleSumbit = async () => {
-    const newlisting = {
+async function handleUpdate() {
+    const updatedJob = {
         type: form.type,
         offering: form.offering,
         requesting: form.requesting,
@@ -39,22 +48,47 @@ const handleSumbit = async () => {
     }
 
     try {
-        const docRef = await addDoc(collection(db, "listings"), newlisting);
-        toast.success('listing Added Successfully');
-        console.log("Document written with ID: ", docRef.id);
-        router.push(`/listings/${docRef.id}`);
-    } catch (e) {
-        toast.error('Error Adding listing');
-        console.error("Error adding document: ", e);
+        const docRef = doc(db, "listings", jobId);
+        await updateDoc(docRef, updatedJob);
+        toast.success('Job Updated Successfully');
+        router.push(`/listings/${jobId}`);
+    } catch (error) {
+        toast.error('Error Updating Job');
     }
 };
+
+onMounted(async () => {
+    try {
+        const docRef = doc(db, "listings", jobId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            state.job = docSnap.data();
+            form.type = state.job.type;
+            form.offering = state.job.offering;
+            form.requesting = state.job.requesting;
+            form.note = state.job.note;
+            form.location = state.job.location;
+            form.person.name = state.job.person.name;
+            form.person.bio = state.job.person.bio;
+            form.person.contactEmail = state.job.person.contactEmail;
+            form.person.contactPhone = state.job.person.contactPhone;
+        } else {
+            throw ('No such job found');
+        }
+    } catch (error) {
+        console.log('Error Fetching Job Data', error);
+    } finally {
+        state.isLoading = false;
+    }
+})
 </script>
 
 <template>
     <section class="bg-green-50">
         <div class="container m-auto max-w-2xl py-24">
             <div class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-                <form @submit.prevent="handleSumbit">
+                <form @submit.prevent="handleUpdate">
                     <h2 class="text-3xl text-center font-semibold mb-6">Add A Post</h2>
 
                     <div class="mb-4">

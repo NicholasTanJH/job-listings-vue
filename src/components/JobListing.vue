@@ -1,6 +1,8 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { defineProps, ref, computed } from 'vue';
+import exchange from '@/assets/img/exchange.png'
+
 const props = defineProps({
     job: Object
 });
@@ -11,43 +13,43 @@ const toggleFullDescription = () => {
     showDescription.value = !showDescription.value;
 }
 
-const truncatedDescription = computed(() => {
-    let description = props.job.description;
-    if (!showDescription.value) {
-        description = description.substring(0, 90) + '...';
-    }
-    return description;
-});
-
 </script>
 
 <template>
     <div class="bg-white rounded-xl shadow-md relative">
-        <div class="p-4">
+        <div class="bg-gray-100 p-4 flex flex-col">
             <div class="mb-6">
-                <div class="text-gray-600 my-2">{{ job.type }}</div>
-                <h3 class="text-xl font-bold">{{ job.title }}</h3>
+                <div class="flex flex-col items-center justify-around">
+                    <h3 class="text-3xl text-lime-700 font-bold m-5">{{ job.offering }}</h3>
+                    <img class="h-20 w-auto" :src="exchange" alt="<=>" />
+                    <h3 class="text-3xl text-orange-800 font-bold m-5">{{ job.requesting }}</h3>
+                </div>
+
             </div>
 
             <div class="mb-5">
                 <div>
-                    {{ truncatedDescription }}
+                    {{ job.note }}
                 </div>
-                <button @click="toggleFullDescription" class="text-green-500 hover:text-green-600 mb-5">
-                    {{ showDescription ? 'less' : 'more' }}
-                </button>
             </div>
-
-            <h3 class="text-green-500 mb-2">{{ job.salary }} / Year</h3>
 
             <div class="border border-gray-100 mb-5"></div>
 
-            <div class="flex flex-col lg:flex-row justify-between mb-4">
-                <div class="text-orange-700 mb-3">
-                    <i class="pi pi-map-marker text-orange-700"></i>
-                    {{ job.location }}
+            <div id="last" class="flex justify-between items-center">
+                <!-- Left items -->
+                <div class="flex space-x-4">
+                    <div class="text-black-700 mb-3">
+                        <i class="pi pi-user text-black-700"></i>
+                        {{ job.person.name }}
+                    </div>
+                    <div class="text-orange-700 mb-3">
+                        <i class="pi pi-map-marker text-orange-700"></i>
+                        {{ job.location }} ({{ job.type }})
+                    </div>
                 </div>
-                <RouterLink :to="'/jobs/' + job.id"
+
+                <!-- Right item -->
+                <RouterLink :to="'/listings/' + job.id"
                     class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm">
                     Read More
                 </RouterLink>

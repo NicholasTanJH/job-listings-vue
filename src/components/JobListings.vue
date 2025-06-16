@@ -21,7 +21,7 @@ defineProps({
 })
 
 onMounted(async () => {
-    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const querySnapshot = await getDocs(collection(db, "listings"));
     state.jobs = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
@@ -35,7 +35,7 @@ onMounted(async () => {
     <section class="bg-blue-50 px-y py-10">
         <div class="container-xl lg:container m-auto">
             <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">
-                Browse jobs
+                Browse Missing Pets
             </h2>
             <!-- Loading jobs-->
             <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
@@ -43,13 +43,13 @@ onMounted(async () => {
             </div>
             <!-- Done loading jobs -->
             <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <JobListing v-for="job in state.jobs.slice(0, limit || state.jobs.length)" :key="job.id" :job="job" />
+                <JobListing v-for="job in state.jobs.slice(0, limit || state.jobs.length)" :job="job" />
             </div>
         </div>
     </section>
 
     <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
         <RouterLink to="/jobs" class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700">View
-            All Jobs</RouterLink>
+            All Missing Pets</RouterLink>
     </section>
 </template>
