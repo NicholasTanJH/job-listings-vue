@@ -4,18 +4,18 @@ import { defineProps } from 'vue'
 defineProps({
   title: {
     type: String,
-    default: 'Help Bring Them Home',
+    default: 'Exchange Skills. Empower Each Other.',
   },
   subtitle: {
     type: String,
-    default: 'Report lost pets or browse listings to help reunite furry friends with their families'
+    default: 'Connect with others by offering your talents and learning something new in return.'
   }
 })
 </script>
 
 
 <template>
-  <section class="bg-green-700 py-20 mb-4">
+  <section class="bg-green-700 py-15">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
       <div class="text-center">
         <h1 class="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">

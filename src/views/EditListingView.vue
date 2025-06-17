@@ -88,7 +88,7 @@ onMounted(async () => {
     <section class="bg-green-50">
         <div class="container m-auto max-w-2xl py-24">
             <div class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-                <form @submit.prevent="handleUpdate">
+                <form @submit.prevent="handleSumbit">
                     <h2 class="text-3xl text-center font-semibold mb-6">Add A Post</h2>
 
                     <div class="mb-4">
@@ -102,13 +102,13 @@ onMounted(async () => {
 
                     <div class="mb-4">
                         <label for="offering" class="block text-gray-700 font-bold mb-2">Offering</label>
-                        <input v-model="form.offering" type="text" id="offering" name="offering"
+                        <input v-model="form.offering" type="text" id="offering" name="offering" maxlength="30"
                             class="border rounded-sm w-full py-2 px-3 mb-2" placeholder="eg. JavaScript tutoring"
                             required />
                     </div>
                     <div class="mb-4">
                         <label for="requesting" class="block text-gray-700 font-bold mb-2">Requesting</label>
-                        <input v-model="form.requesting" type="text" id="requesting" name="requesting"
+                        <input v-model="form.requesting" type="text" id="requesting" name="requesting" maxlength="30"
                             class="border rounded-sm w-full py-2 px-3 mb-2" placeholder="eg. Graphic design" required />
                     </div>
                     <div class="mb-4">
@@ -122,7 +122,7 @@ onMounted(async () => {
                         <label for="location" class="block text-gray-700 font-bold mb-2">
                             Location
                         </label>
-                        <input v-model="form.location" type="text" id="location" name="location"
+                        <input v-model="form.location" type="text" id="location" name="location" maxlength="30"
                             class="border rounded-sm w-full py-2 px-3 mb-2" placeholder="Your Location" required />
                     </div>
 
@@ -130,7 +130,7 @@ onMounted(async () => {
 
                     <div class="mb-4">
                         <label for="person" class="block text-gray-700 font-bold mb-2">Your Name</label>
-                        <input v-model="form.person.name" type="text" id="person" name="person"
+                        <input v-model="form.person.name" type="text" id="person" name="person" maxlength="50"
                             class="border rounded-sm w-full py-2 px-3"
                             placeholder="What would you like people to call you?" />
                     </div>
