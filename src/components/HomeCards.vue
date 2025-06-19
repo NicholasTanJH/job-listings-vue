@@ -5,26 +5,26 @@ import Card from '@/components/Card.vue'
 
 <template>
   <!-- Developers and Employers -->
-  <section class="py-4">
+  <section class="py-4 bg-gray-800">
     <div class="container-xl lg:container m-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg">
         <Card>
-          <h2 class="text-2xl font-bold">For Developers</h2>
+          <h2 class="text-2xl font-bold">Explore Skill Posts</h2>
           <p class="mt-2 mb-4">
-            Browse our Vue jobs and start your career today
+            Discover what others are offering and requesting, and find your opportunity to help or learn.
           </p>
-          <RouterLink to="/jobs" class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700">
-            Browse Jobs
+          <RouterLink to="/listings" class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700">
+            Browse Offers & Requests
           </RouterLink>
         </Card>
         <Card bg="bg-green-100">
-          <h2 class="text-2xl font-bold">For Employers</h2>
+          <h2 class="text-2xl font-bold">Offer or Request Skills</h2>
           <p class="mt-2 mb-4">
-            List your job to find the perfect developer for the role
+            Whether you want to help or need a hand, create a post and connect with others in the community.
           </p>
-          <RouterLink to="jobs/add"
+          <RouterLink to="listings/add"
             class="inline-block bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600">
-            Add Job
+            Start a post
           </RouterLink>
         </Card>
       </div>

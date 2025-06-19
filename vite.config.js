@@ -13,7 +13,8 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
       }
-    }
+    },
+    host: true
   },
   plugins: [
     vue(),

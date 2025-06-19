@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from '@/views/HomeView.vue';
-import JobListings from "@/views/JobsView.vue";
+import ListingsView from "@/views/ListingsView.vue";
 import NotFound from "@/views/NotFound.vue";
-import JobView from "@/views/JobView.vue";
-import AddJobView from "@/views/AddJobView.vue";
-import EditJobView from "@/views/EditJobView.vue";
+import ListingView from "@/views/ListingView.vue";
+import AddListingView from "@/views/AddListingView.vue";
+import EditListingView from "@/views/EditListingView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,14 +15,14 @@ const router = createRouter({
             component: HomeView
         },
         {
-            path: '/jobs',
-            name: 'jobs',
-            component: JobListings
+            path: '/listings',
+            name: 'listings',
+            component: ListingsView
         },
         {
-            path: '/jobs/:id',
-            name: 'job',
-            component: JobView 
+            path: '/listings/:id',
+            name: 'listing',
+            component: ListingView 
         },
         {
             path: '/:catchAll(.*)',
@@ -30,14 +30,14 @@ const router = createRouter({
             component: NotFound
         },
         {
-            path: '/jobs/add',
-            name: 'add-job',
-            component: AddJobView
+            path: '/listings/add',
+            name: 'add-listing',
+            component: AddListingView
         },
         {
-            path: '/jobs/edit/:id',
+            path: '/listings/edit/:id',
             name: 'editPage',
-            component: EditJobView
+            component: EditListingView
         }
     ],
 });
