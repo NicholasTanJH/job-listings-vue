@@ -79,17 +79,18 @@ const handleSumbit = async () => {
                     </div>
                     <div class="mb-4">
                         <label for="note" class="block text-gray-700 font-bold mb-2">Note</label>
-                        <textarea v-model="form.note" id="note" name="note"
-                            class="border rounded-sm w-full py-2 px-3" rows="4"
-                            placeholder="Add any expectations, requirements, etc"></textarea>
+                        <textarea v-model="form.note" id="note" name="note" class="border rounded-sm w-full py-2 px-3"
+                            rows="4" placeholder="Add any expectations, requirements, etc"></textarea>
                     </div>
 
                     <div class="mb-4">
                         <label for="location" class="block text-gray-700 font-bold mb-2">
                             Location
                         </label>
-                        <input v-model="form.location" type="text" id="location" name="location" maxlength="30"
-                            class="border rounded-sm w-full py-2 px-3 mb-2" placeholder="Your Location" required />
+                        <input v-model="form.location" type="text" id="location" name="location" maxlength="30" :class="[
+                            'border rounded-sm w-full py-2 px-3 mb-2',
+                            form.type === 'Remote' ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : ''
+                        ]" :disabled="form.type === 'Remote'" placeholder="Your Location" />
                     </div>
 
                     <h3 class="text-2xl mb-5">About Yourself</h3>
