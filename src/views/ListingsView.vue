@@ -1,7 +1,7 @@
 <script setup>
-import JobListings from '@/components/JobListings.vue';
+import Listings from '@/components/Listings.vue';
 </script>
 
 <template>
-    <JobListings />
+    <Listings full-screen="true"/>
 </template>

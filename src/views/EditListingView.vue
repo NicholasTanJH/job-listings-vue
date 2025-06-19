@@ -11,7 +11,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 const route = useRoute();
 const toast = useToast();
 
-const jobId = route.params.id;
+const listingId = route.params.id;
 
 const form = reactive({
     type: 'In-Person',
@@ -28,12 +28,12 @@ const form = reactive({
 })
 
 const state = reactive({
-    job: {},
+    listing: {},
     isLoading: true,
 });
 
 async function handleUpdate() {
-    const updatedJob = {
+    const updatedListing = {
         type: form.type,
         offering: form.offering,
         requesting: form.requesting,
@@ -48,36 +48,36 @@ async function handleUpdate() {
     }
 
     try {
-        const docRef = doc(db, "listings", jobId);
-        await updateDoc(docRef, updatedJob);
-        toast.success('Job Updated Successfully');
-        router.push(`/listings/${jobId}`);
+        const docRef = doc(db, "listings", listingId);
+        await updateDoc(docRef, updatedListing);
+        toast.success('Listing Updated Successfully');
+        router.push(`/listings/${listingId}`);
     } catch (error) {
-        toast.error('Error Updating Job');
+        toast.error('Error Updating listing');
     }
 };
 
 onMounted(async () => {
     try {
-        const docRef = doc(db, "listings", jobId);
+        const docRef = doc(db, "listings", listingId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            state.job = docSnap.data();
-            form.type = state.job.type;
-            form.offering = state.job.offering;
-            form.requesting = state.job.requesting;
-            form.note = state.job.note;
-            form.location = state.job.location;
-            form.person.name = state.job.person.name;
-            form.person.bio = state.job.person.bio;
-            form.person.contactEmail = state.job.person.contactEmail;
-            form.person.contactPhone = state.job.person.contactPhone;
+            state.listing = docSnap.data();
+            form.type = state.listing.type;
+            form.offering = state.listing.offering;
+            form.requesting = state.listing.requesting;
+            form.note = state.listing.note;
+            form.location = state.listing.location;
+            form.person.name = state.listing.person.name;
+            form.person.bio = state.listing.person.bio;
+            form.person.contactEmail = state.listing.person.contactEmail;
+            form.person.contactPhone = state.listing.person.contactPhone;
         } else {
-            throw ('No such job found');
+            throw ('No such listing found');
         }
     } catch (error) {
-        console.log('Error Fetching Job Data', error);
+        console.log('Error Fetching listing Data', error);
     } finally {
         state.isLoading = false;
     }
@@ -88,8 +88,8 @@ onMounted(async () => {
     <section class="bg-green-50">
         <div class="container m-auto max-w-2xl py-24">
             <div class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
-                <form @submit.prevent="handleSumbit">
-                    <h2 class="text-3xl text-center font-semibold mb-6">Add A Post</h2>
+                <form @submit.prevent="handleUpdate">
+                    <h2 class="text-3xl text-center font-semibold mb-6">Edit Post</h2>
 
                     <div class="mb-4">
                         <label for="type" class="block text-gray-700 font-bold mb-2">Meeting Method</label>
@@ -157,7 +157,7 @@ onMounted(async () => {
                         <button
                             class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-hidden focus:shadow-outline"
                             type="submit">
-                            Add Post
+                            Done Editing
                         </button>
                     </div>
                 </form>

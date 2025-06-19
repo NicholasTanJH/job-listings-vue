@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from '@/views/HomeView.vue';
-import JobListings from "@/views/ListingsView.vue";
+import ListingsView from "@/views/ListingsView.vue";
 import NotFound from "@/views/NotFound.vue";
-import JobView from "@/views/ListingView.vue";
-import AddJobView from "@/views/AddJobView.vue";
-import EditJobView from "@/views/EditListingView.vue";
+import ListingView from "@/views/ListingView.vue";
+import AddListingView from "@/views/AddListingView.vue";
+import EditListingView from "@/views/EditListingView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,12 +17,12 @@ const router = createRouter({
         {
             path: '/listings',
             name: 'listings',
-            component: JobListings
+            component: ListingsView
         },
         {
             path: '/listings/:id',
             name: 'listing',
-            component: JobView 
+            component: ListingView 
         },
         {
             path: '/:catchAll(.*)',
@@ -32,12 +32,12 @@ const router = createRouter({
         {
             path: '/listings/add',
             name: 'add-listing',
-            component: AddJobView
+            component: AddListingView
         },
         {
             path: '/listings/edit/:id',
             name: 'editPage',
-            component: EditJobView
+            component: EditListingView
         }
     ],
 });

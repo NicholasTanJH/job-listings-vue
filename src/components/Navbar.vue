@@ -26,12 +26,12 @@ const isActive = (routePath) => {
               </RouterLink>
               <RouterLink to="/listings"
                 :class="[isActive('/listings') ? 'bg-gray-600' : 'hover:bg-gray-900', 'text-white', 'rounded-md', 'px-3', 'py-2']">
-                Listings
+                Posts
               </RouterLink>
               <RouterLink to="/listings/add"
                 :class="[isActive('/listings/add') ? 'bg-gray-600' : 'hover:bg-gray-900', 'text-white', 'rounded-md', 'px-3', 'py-2']">
                 Add
-                New Listing</RouterLink>
+                New Post</RouterLink>
             </div>
           </div>
         </div>
