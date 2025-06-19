@@ -50,7 +50,7 @@ const deletelisting = async () => {
 
 <template>
     <BackButton />
-    <section v-if="!state.isLoading" class="bg-green-50">
+    <section v-if="!state.isLoading" class="bg-gray-800 min-h-screen">
         <div class="container m-auto py-10 px-6">
             <div class="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
                 <main>
